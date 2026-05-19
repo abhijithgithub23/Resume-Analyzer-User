@@ -41,34 +41,34 @@ function App() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-12 mb-12 p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
-      <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8 tracking-tight">
+    <div className="max-w-3xl mx-auto mt-12 mb-12 p-8 bg-gray-800 rounded-2xl shadow-2xl border border-gray-700">
+      <h1 className="text-4xl font-extrabold text-center text-white mb-8 tracking-tight">
         Smart ATS Resume Analyzer
       </h1>
       
       <form onSubmit={handleAnalyze} className="space-y-6">
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700 mb-2">Upload Resume (PDF)</label>
+          <label className="font-semibold text-gray-300 mb-2">Upload Resume (PDF)</label>
           <input 
             type="file" 
             accept=".pdf" 
             onChange={handleFileChange} 
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition duration-150 cursor-pointer"
+            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-700 file:text-blue-400 hover:file:bg-gray-600 transition duration-150 cursor-pointer"
           />
         </div>
 
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700 mb-2">Job Description</label>
+          <label className="font-semibold text-gray-300 mb-2">Job Description</label>
           <textarea 
             placeholder="Paste the job description here..."
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
-            className="p-4 border border-gray-300 rounded-xl min-h-[160px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-700 resize-y"
+            className="p-4 bg-gray-700 border border-gray-600 rounded-xl min-h-[160px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-100 placeholder-gray-400 resize-y"
           />
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg">
+          <div className="p-4 bg-red-900/30 border-l-4 border-red-500 text-red-200 rounded-r-lg">
             {error}
           </div>
         )}
@@ -76,7 +76,7 @@ function App() {
         <button 
           type="submit" 
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0 disabled:transform-none"
+          className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition duration-300 ease-in-out disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed transform hover:-translate-y-0.5 active:translate-y-0 disabled:transform-none"
         >
           {loading ? (
             <span className="flex items-center justify-center">
@@ -91,50 +91,50 @@ function App() {
       </form>
 
       {results && (
-        <div className="mt-10 p-8 bg-gray-50 rounded-2xl border border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">Analysis Results</h2>
+        <div className="mt-10 p-8 bg-gray-900 rounded-2xl border border-gray-700">
+          <h2 className="text-2xl font-bold text-white mb-6 border-b border-gray-700 pb-4">Analysis Results</h2>
           
           <div className="mb-8">
-            <p className="text-gray-600 font-medium mb-1">ATS Match Score</p>
+            <p className="text-gray-400 font-medium mb-1">ATS Match Score</p>
             <div className="flex items-baseline">
-              <span className={`text-5xl font-extrabold ${results.ats_score >= 75 ? 'text-green-500' : results.ats_score >= 50 ? 'text-yellow-500' : 'text-red-500'}`}>
+              <span className={`text-5xl font-extrabold ${results.ats_score >= 75 ? 'text-green-400' : results.ats_score >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
                 {results.ats_score}%
               </span>
             </div>
             
             {/* Simple progress bar */}
-            <div className="w-full bg-gray-200 rounded-full h-2.5 mt-4">
+            <div className="w-full bg-gray-700 rounded-full h-2.5 mt-4">
               <div 
-                className={`h-2.5 rounded-full ${results.ats_score >= 75 ? 'bg-green-500' : results.ats_score >= 50 ? 'bg-yellow-500' : 'bg-red-500'}`} 
+                className={`h-2.5 rounded-full ${results.ats_score >= 75 ? 'bg-green-400' : results.ats_score >= 50 ? 'bg-yellow-400' : 'bg-red-400'}`} 
                 style={{ width: `${results.ats_score}%` }}
               ></div>
             </div>
           </div>
           
           <div className="mb-8">
-            <h3 className="text-lg font-bold text-gray-800 mb-3">Recommendations:</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Recommendations:</h3>
             <ul className="space-y-2">
               {results.suggestions.map((s, index) => (
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3 flex-shrink-0"></span>
-                  <span className="text-gray-700">{s}</span>
+                  <span className="text-gray-300">{s}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-3">Missing Keywords to Add:</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Missing Keywords to Add:</h3>
             {results.missing_keywords.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {results.missing_keywords.map((keyword, index) => (
-                  <span key={index} className="px-3 py-1.5 bg-red-100 text-red-700 border border-red-200 rounded-lg text-sm font-medium shadow-sm">
+                  <span key={index} className="px-3 py-1.5 bg-red-900/40 text-red-300 border border-red-800 rounded-lg text-sm font-medium shadow-sm">
                     {keyword}
                   </span>
                 ))}
               </div>
             ) : (
-              <p className="text-green-600 font-medium">Great job! No major keywords missing.</p>
+              <p className="text-green-400 font-medium">Great job! No major keywords missing.</p>
             )}
           </div>
         </div>
